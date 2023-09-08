@@ -1,0 +1,10 @@
+router.get(
+    "/login",
+    passport.authenticate("google", {
+        scope: ["profile"],
+        successRedirect: "http://localhost:3000"
+    })
+);
+
+
+64f1ffe8c127b06e18e87eb4
