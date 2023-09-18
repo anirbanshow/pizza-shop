@@ -86,3 +86,59 @@ export const paymentVerification = (
         });
     }
 }
+
+
+export const getMyOrders = () => async (dispatch) => {
+
+    try {
+        dispatch({
+            type: "getMyOrdersRequest",
+        });
+
+        const { data } = await axios.get(`${server}/myorders`, {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            withCredentials: true,
+        })
+
+        dispatch({
+            type: "getMyOrdersSuccess",
+            payload: data.orders
+        });
+    } catch (error) {
+
+        dispatch({
+            type: "getMyOrdersFail",
+            payload: error.message
+        });
+    }
+}
+
+
+export const getMyOrderDetails = () => async (dispatch, id) => {
+
+    try {
+        dispatch({
+            type: "getOrderDetailsRequest",
+        });
+
+        const { data } = await axios.get(`${server}/order/${id}`, {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            withCredentials: true,
+        })
+
+        dispatch({
+            type: "getOrderDetailsSuccess",
+            payload: data.order
+        });
+    } catch (error) {
+
+        dispatch({
+            type: "getOrderDetailsFail",
+            payload: error.message
+        });
+    }
+}

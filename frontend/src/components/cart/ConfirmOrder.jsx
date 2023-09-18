@@ -62,14 +62,20 @@ const ConfirmOrder = () => {
                 name: "Anirban Dev",
                 description: "This is test mode",
                 order_id: order.id,
-                handler: function (response) {
-                    console.log(response);
+                handler: async function (response) {
+                    const { razorpay_payment_id, razorpay_order_id, razorpay_signature } = response;
 
-                    const { razorpay_payment_id, razorpay_order_id, razorpay_signature, } = response;
-
-                    dispatch(paymentVerification({
-                        razorpay_payment_id, razorpay_order_id, razorpay_signature, orderOptions
-                    }));
+                    const { data } = await axios.post(`${server}/paymentverification`,
+                        { razorpay_payment_id, razorpay_order_id, razorpay_signature, orderOptions },
+                        {
+                            headers: { "Content-Type": "application/json" },
+                            withCredentials: true
+                        }
+                    );
+                    console.log(data);
+                    toast.success(message);
+                    dispatch({ type: "clearMessage" });
+                    dispatch({ type: "emptyState" });
                 },
                 theme: {
                     "color": "#3399cc"

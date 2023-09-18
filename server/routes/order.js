@@ -18,7 +18,7 @@ router.post("/createOrderOnline", isAuthenticated, placeOrderOnline);
 
 router.post("/paymentverification", isAuthenticated, paymentVerification);
 
-router.get("/myOrder", isAuthenticated, getOrders);
+router.get("/myOrders", isAuthenticated, getOrders);
 
 router.get("/order/:id", isAuthenticated, getOrderDetails);
 

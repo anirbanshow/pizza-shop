@@ -150,11 +150,11 @@ export const paymentVerification = async (req, res, next) => {
 
     const body = razorpay_order_id + "|" + razorpay_payment_id;
 
-    const expectedSignature = crypto.createHmac('sha256', process.env.RAZORPAY_API_SECRET)
+    const expectedSignature = crypto.createHmac('sha256', "dCfkvIx9QaWc4vJj6dtdaYjX")
         .update(body.toString())
         .digest('hex');
 
-        console.log(razorpay_signature == expectedSignature);
+    console.log(razorpay_signature == expectedSignature);
 
     if (razorpay_signature == expectedSignature) {
 

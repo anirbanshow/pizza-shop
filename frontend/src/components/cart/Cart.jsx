@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import burger1 from "../../assets/burger1.png";
 import burger2 from "../../assets/burger2.png";
 import burger3 from "../../assets/burger3.png";
@@ -24,6 +24,8 @@ const Cart = () => {
         shippingCharges,
         totalAmount
     } = useSelector(state => state.cart);
+
+    const { cartItems: orderItems } = useSelector(state => state.cart);
 
     const dispatch = useDispatch();
 
@@ -74,6 +76,18 @@ const Cart = () => {
                 break;
         }
     };
+
+    useEffect(() => {
+        localStorage.setItem("cartItems", JSON.stringify(orderItems));
+        localStorage.setItem("cartPrices", JSON.stringify(
+            {
+                subTotal,
+                tax,
+                shippingCharges,
+                totalAmount
+            })
+        )
+    }, [orderItems, subTotal, tax, shippingCharges, totalAmount]);
 
     return (
         <section className="cart">

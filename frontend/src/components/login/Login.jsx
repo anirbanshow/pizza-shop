@@ -12,7 +12,7 @@ const Login = () => {
     return (
         <section className="login">
             <motion.button
-                // initial={{ y: "100vh" }} animate={{ y: 0 }}
+                initial={{ y: "100vh" }} animate={{ y: 0 }}
                 onClick={loginHandler}
             >
                 Login with Google

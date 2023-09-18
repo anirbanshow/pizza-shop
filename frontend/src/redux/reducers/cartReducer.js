@@ -1,25 +1,37 @@
 import { createReducer } from "@reduxjs/toolkit";
 
 const initailState = {
-    cartItems: {
-        chessBurger: {
-            quantity: 0,
-            price: 200
+    cartItems: localStorage.getItem("cartItems")
+        ? JSON.parse(localStorage.getItem("cartItems"))
+        : {
+            chessBurger: {
+                quantity: 0,
+                price: 200
+            },
+            vegChessBurger: {
+                quantity: 0,
+                price: 500
+            },
+            BurgerWithFries: {
+                quantity: 0,
+                price: 1800
+            }
         },
-        vegChessBurger: {
-            quantity: 0,
-            price: 500
-        },
-        BurgerWithFries: {
-            quantity: 0,
-            price: 1800
-        }
-    },
-    subTotal: 0,
-    tax: 0,
-    shippingCharges: 0,
-    totalAmount: 0,
-    shippingInfo: {}
+    subTotal: localStorage.getItem("cartPrices")
+        ? JSON.parse(localStorage.getItem("cartPrices")).subTotal
+        : 0,
+    tax: localStorage.getItem("cartPrices")
+        ? JSON.parse(localStorage.getItem("cartPrices")).tax
+        : 0,
+    shippingCharges: localStorage.getItem("cartPrices")
+        ? JSON.parse(localStorage.getItem("cartPrices")).shippingCharges
+        : 0,
+    totalAmount: localStorage.getItem("cartPrices")
+        ? JSON.parse(localStorage.getItem("cartPrices")).totalAmount
+        : 0,
+    shippingInfo: localStorage.getItem("shippingInfo")
+        ? JSON.parse(localStorage.getItem("shippingInfo"))
+        : {}
 };
 
 export const cartReducer = createReducer(
@@ -87,42 +99,6 @@ export const cartReducer = createReducer(
                 pinCode: action.payload.pinCode,
                 phoneNo: action.payload.phoneNo
             }
-        }
-    }
-);
-
-export const orderReducer = createReducer(
-    initailState,
-    {
-        createOrderRequest: (state) => {
-            state.loading = true;
-        },
-        createOrderSuccess: (state, action) => {
-            state.loading = false;
-            state.message = action.payload;
-        },
-        createOrderFail: (state, action) => {
-            state.loading = false;
-            state.message = action.payload;
-        },
-
-        paymentVerificationRequest: (state) => {
-            state.loading = true;
-        },
-        paymentVerificationSuccess: (state, action) => {
-            state.loading = false;
-            state.message = action.payload;
-        },
-        paymentVerificationFail: (state, action) => {
-            state.loading = false;
-            state.message = action.payload;
-        },
-
-        clearMessage: (state) => {
-            state.message = null;
-        },
-        clearError: (state) => {
-            state.error = null;
         }
     }
 );

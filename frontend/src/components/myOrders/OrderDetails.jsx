@@ -1,6 +1,30 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams } from "react-router-dom";
+import { server } from '../../redux/store';
+import axios from 'axios';
 
 const OrderDetails = () => {
+
+    const { id } = useParams();
+
+    const [order, setOrder] = useState({});
+
+    async function fetchOrderDetail() {
+
+        const { data } = await axios.get(`${server}/order/${id}`, {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            withCredentials: true,
+        })
+
+        setOrder(data.document);
+    }
+
+    useEffect(() => {
+        fetchOrderDetail();
+    }, [id]);
+
     return (
         <section className="OrderDetails">
             <main>
