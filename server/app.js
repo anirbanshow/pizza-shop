@@ -54,8 +54,6 @@ connectPassport();
 import userRouter from './routes/user.js';
 import orderRouter from './routes/order.js';
 
-console.log(process.env.FRONTEND_URL);
-
 app.use("/api/v1", userRouter);
 app.use("/api/v1", orderRouter);
 

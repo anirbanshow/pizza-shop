@@ -3,6 +3,7 @@ import Payment from "../models/Payment.js";
 import { asyncError } from "../middlewares/errorMiddleware.js";
 import ErrorHandler from "../utils/ErrorHandler.js";
 import { instance } from "../server.js";
+import crypto from "crypto";
 
 export const placeOrder = asyncError(async (req, res, next) => {
 
@@ -143,7 +144,7 @@ export const placeOrderOnline = asyncError(async (req, res, next) => {
     });
 });
 
-export const paymentVerification = async (req, res) => {
+export const paymentVerification = async (req, res, next) => {
 
     const { razorpay_payment_id, razorpay_order_id, razorpay_signature, orderOptions } = req.body;
 
@@ -152,6 +153,8 @@ export const paymentVerification = async (req, res) => {
     const expectedSignature = crypto.createHmac('sha256', process.env.RAZORPAY_API_SECRET)
         .update(body.toString())
         .digest('hex');
+
+        console.log(razorpay_signature == expectedSignature);
 
     if (razorpay_signature == expectedSignature) {
 

@@ -20,7 +20,7 @@ const Menu = () => {
                     itemNum={1}
                     burgerSrc={burger1}
                     price={200}
-                    title="Pizza Big"
+                    title="Chess Burger"
                     handler={addToCartHandler}
                     delay={0.1}
                 />
@@ -28,7 +28,7 @@ const Menu = () => {
                     itemNum={2}
                     burgerSrc={burger2}
                     price={100}
-                    title="Pizza Middum"
+                    title="Veg Chess Burger"
                     handler={addToCartHandler}
                     delay={0.5}
                 />
@@ -36,7 +36,7 @@ const Menu = () => {
                     itemNum={3}
                     burgerSrc={burger3}
                     price={300}
-                    title="Pizza Small"
+                    title="Burger With Fries"
                     handler={addToCartHandler}
                     delay={0.8}
                 />

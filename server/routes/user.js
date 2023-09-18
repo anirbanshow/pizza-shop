@@ -12,13 +12,6 @@ router.get(
     })
 );
 
-// router.get("/login",
-//     passport.authenticate("google"),
-//     (req, res, next) => {
-//         res.send("Logged In");
-//     }
-// );
-
 router.get(
     "/login",
     passport.authenticate("google", {
