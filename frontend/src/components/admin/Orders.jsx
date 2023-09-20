@@ -5,6 +5,9 @@ import { GiArmoredBoomerang } from 'react-icons/gi';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { getAdminOrders } from "../../redux/actions/admin";
+import axios from 'axios';
+import { server } from '../../redux/store';
+import toast from 'react-hot-toast';
 
 const Orders = () => {
 
@@ -18,6 +21,22 @@ const Orders = () => {
         dispatch(getAdminOrders());
     }, [dispatch]);
 
+    const processOrderHandler = async (id) => {
+
+        try {
+            const { data } = await axios.get(`${server}/admin/order/${id}`, {
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                withCredentials: true,
+            })
+
+            dispatch(getAdminOrders());
+            toast.success(data?.message);
+        } catch (error) {
+            toast.success("Something went wrong");
+        }
+    }
 
     return (
         <section className="tableClass">
@@ -55,7 +74,10 @@ const Orders = () => {
                                         <Link to={`/order/${i._id}`}>
                                             <AiOutlineEye />
                                         </Link>
-                                        <button><GiArmoredBoomerang /></button>
+
+                                        <button onClick={() => processOrderHandler(i._id)}>
+                                            <GiArmoredBoomerang />
+                                        </button>
                                     </td>
                                 </tr>
                             ))
