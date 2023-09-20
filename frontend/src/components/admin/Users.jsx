@@ -1,7 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import user from "../../assets/founder.webp";
+import { useDispatch, useSelector } from 'react-redux';
+import { getAdminUsers } from "../../redux/actions/admin";
 
 const Users = () => {
+
+    const dispatch = useDispatch();
+
+    const {
+        loading, users, error
+    } = useSelector(state => state.admin);
+
+    useEffect(() => {
+        dispatch(getAdminUsers());
+    }, [dispatch]);
+
     return (
         <section className="tableClass">
             <main>
@@ -17,15 +30,19 @@ const Users = () => {
                     </thead>
 
                     <tbody>
-                        <tr>
-                            <td>#545454</td>
-                            <td>Dev 1</td>
-                            <td>
-                                <img src={user} alt='User' />
-                            </td>
-                            <td>user</td>
-                            <td>1 days</td>
-                        </tr>
+                        {
+                            users && users.map((i) => (
+                                <tr key={i._id}>
+                                    <td>#{i._id}</td>
+                                    <td>{i.name}</td>
+                                    <td>
+                                        <img src={i.photo} alt='User' />
+                                    </td>
+                                    <td>{i.role}</td>
+                                    <td>{i.createdAt.split("T")[0]}</td>
+                                </tr>
+                            ))
+                        }
                     </tbody>
                 </table>
             </main>
